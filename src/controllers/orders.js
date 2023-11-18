@@ -179,7 +179,7 @@ router.put('/orders/deliveryMan/assignOrder/:orderNumber', async (req, res) => {
             await order.updateOne({
                 orderNumber: req.params.orderNumber
             }, {
-                deliveryMan: deliveryManView,
+                deliveryMan: ordersDeliveryMan.name,
                 emailDeliveryMan: ordersDeliveryMan.email
             })
           

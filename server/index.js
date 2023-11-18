@@ -17,11 +17,6 @@ io.on('connection', (socket) => {
         console.log(`${socket.id.substr(0,2)} said ${message}`);
         io.emit('updateState', `${socket.id.substr(0,2)} said ${message}`);
     });
-    socket.on('cancelOrder', (message) => {
-        console.log(`${socket.id.substr(0,2)} said ${message}`);
-        io.emit('cancelOrder',`cancel ${message}`);
-    });
-
 
 });
 
