@@ -60,7 +60,7 @@ router.get('/orders/deliveryMan/aviable', async (req, res) => {
         "orderInformation.measures": 0,
         "addressee.adresseeName": 0,
         "addressee.phoneNumber": 0,
-        "user": 0,
+        "sender": 0,
         "date": 0,
         "deliveryMan": 0,
         "deliveryTime": 0,
@@ -118,7 +118,7 @@ router.post('/orders/create', async (req, res) => {
 
     if (viewOrderInfo.length === 0) {
         const orderData = {
-            user: req.body.user,
+            sender: req.body.user,
             date: req.body.date,
             collectionAddress: req.body.collectionAddress,
             deliveryAddress: req.body.deliveryAddress,

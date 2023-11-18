@@ -4,7 +4,7 @@ const mongose = require("mongoose")
 const Schema = mongose.Schema
 
 const order = new Schema({
-    user: String,
+    sender: String,
     date: String,
     collectionAddress: String,
     deliveryAddress: String,
