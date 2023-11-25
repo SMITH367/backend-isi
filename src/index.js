@@ -17,10 +17,10 @@ app.use((req, res, next) => {
 app.use(express.json())
 
 
-app.use(require('./controllers/users'))
-app.use(require('./controllers/orders'))
-app.use(require('./controllers/deliveryMan'))
-app.use(require('./controllers/admin'))
+app.use(require('./controllers/users_controller'))
+app.use(require('./controllers/orders_controller'))
+app.use(require('./controllers/deliveryMan_controller'))
+app.use(require('./controllers/deliveryMan_controller'))
 
 app.listen(app.get('port'), () => {
     console.log('server in the port ', app.get('port'))
