@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(require('./controllers/users_controller'))
 app.use(require('./controllers/orders_controller'))
 app.use(require('./controllers/deliveryMan_controller'))
-app.use(require('./controllers/deliveryMan_controller'))
+app.use(require('./controllers/admin_controller'))
 
 app.listen(app.get('port'), () => {
     console.log('server in the port ', app.get('port'))
