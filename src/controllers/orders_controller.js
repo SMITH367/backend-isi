@@ -9,6 +9,17 @@ const verifyToken = require("../Auth/verifyToken")
 const jwt = require('jsonwebtoken')
 
 
+const numberValidation = (value) => {
+    var valoresAceptados = /^[0-9]+$/;
+    if (value.match(valoresAceptados)) {
+        return true
+    }
+    return false
+}
+
+const characterValidation = (value, n) => {
+    return value.toString().length === n
+}
 
 //getting all orders 
 router.get('/orders/all', async (req, res) => {
@@ -104,7 +115,7 @@ router.post('/orders/deliveryMan/:id', async (req, res) => {
         }
     } else {
         res.sendStatus(404)
-    }
+     }
 
 
 })
@@ -116,52 +127,61 @@ router.post('/orders/create', async (req, res) => {
         orderNumber: req.params.orderNumber
     })
 
-    if (viewOrderInfo.length === 0) {
-        const orderData = {
-            sender: req.body.user,
-            date: req.body.date,
-            collectionAddress: req.body.collectionAddress,
-            deliveryAddress: req.body.deliveryAddress,
-            price: req.body.price,
-            orderInformation: {
-                value: req.body.value,
-                measures: req.body.measures,
-                contents: req.body.contents
-            },
-            addressee: {
-                addresseeName: req.body.addresseeName,
-                phoneNumber: req.body.addresseePhoneNumber
-            },
-            state: 1,
-            deliveryMan: "",
-            orderNumber: req.body.orderNumber,
-            emailUser: req.body.emailUser,
-            emailDeliveryMan: ""
-        }
-
-
-        const deliveryMans = await deliveryMan.find()
-        let deliveryEmails = []
-        deliveryMans.forEach(delivery => {
-            deliveryEmails.push(delivery.email)
-        })
-
-        // setTimeout(() => {
-        //     sendEmail(deliveryEmails, 1, orderData.orderNumber)
-        // }, 1000)
-        const newOrder = new order(orderData)
-        await newOrder.save()
-
-        res.json({
-            "added": "true"
-        })
+    if((req.body.price > 0 && req.body.price <=2500000) && numberValidation(req.body.addresseePhoneNumber) === true && characterValidation(req.body.addresseePhoneNumber,10)){
+        if (viewOrderInfo.length === 0) {
+            const orderData = {
+                sender: req.body.user,
+                date: req.body.date,
+                collectionAddress: req.body.collectionAddress,
+                deliveryAddress: req.body.deliveryAddress,
+                price: req.body.price,
+                orderInformation: {
+                    value: req.body.value,
+                    measures: req.body.measures,
+                    contents: req.body.contents
+                },
+                addressee: {
+                    addresseeName: req.body.addresseeName,
+                    phoneNumber: req.body.addresseePhoneNumber
+                },
+                state: 1,
+                deliveryMan: "",
+                orderNumber: req.body.orderNumber,
+                emailUser: req.body.emailUser,
+                emailDeliveryMan: ""
+            }
+    
+    
+            const deliveryMans = await deliveryMan.find()
+            let deliveryEmails = []
+            deliveryMans.forEach(delivery => {
+                deliveryEmails.push(delivery.email)
+            })
+    
+            // setTimeout(() => {
+            //     sendEmail(deliveryEmails, 1, orderData.orderNumber)
+            // }, 1000)
+            const newOrder = new order(orderData)
+            await newOrder.save()
+    
+            res.json({
+                "added": "true"
+            })
+    
+        } else {
+            res.status(400).send({
+                "added": "false"
+            })
+    
+        } 
 
     } else {
-        res.send({
-            "added": "false"
+        res.status(400).send({
+            error:"Invalid number fields"
         })
-
     }
+
+
 })
 
 
