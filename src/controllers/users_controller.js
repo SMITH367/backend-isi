@@ -140,10 +140,10 @@ router.post('/user/login', async (req, res) => {
 
             })
         } else {
-            res.sendStatus(403)
+            res.sendStatus(403).json({error:"User not found"})
         }
     } catch (err) {
-        res.sendStatus(403)
+        res.sendStatus(403).json({error:"An unexpected error"})
     }
 
 
